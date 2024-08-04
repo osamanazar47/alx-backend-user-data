@@ -15,6 +15,7 @@ def filter_datum(fields: List[str], redaction: str,
     return re.sub(pattern, lambda match: match.group(0).split('=')[0] +
                   '=' + redaction, message)
 
+
 def get_logger() -> logging.Logger:
     """Returns a logging.logger object"""
     logger = logging.getLogger("user_data")
@@ -29,6 +30,7 @@ def get_logger() -> logging.Logger:
 
     logger.addHandler(handler)
     return logger
+
 
 class RedactingFormatter(logging.Formatter):
     """ Redacting Formatter class
