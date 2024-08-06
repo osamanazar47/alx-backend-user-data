@@ -6,11 +6,12 @@ from typing import List, TypeVar
 
 class Auth:
     """Defining class Auth for app authentication"""
-    def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
+    def require_auth(self, path: str,
+                     excluded_paths: List[str]) -> bool:
         """returns a boolean"""
         if path is None:
             return True
-        
+
         # Check if excluded_paths is None or empty
         if not excluded_paths:
             return True
