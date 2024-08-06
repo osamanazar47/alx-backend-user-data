@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """Module for the authentication in the app"""
 from flask import request
 from typing import List, TypeVar
