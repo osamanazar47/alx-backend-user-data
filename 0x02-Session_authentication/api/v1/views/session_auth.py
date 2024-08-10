@@ -11,7 +11,7 @@ from os import getenv
 @app_views.route('/auth_session/login', methods=['POST'],
                  strict_slashes=False)
 def session_login() -> Tuple[str, int]:
-    """"""
+    """for login in session auth"""
     not_found_response = {"error": "no user found for this email"}
     email = request.form.get('email', None)
     passwd = request.form.get('password', None)
