@@ -15,9 +15,9 @@ def session_login() -> Tuple[str, int]:
     not_found_response = {"error": "no user found for this email"}
     email = request.form.get('email', None)
     passwd = request.form.get('password', None)
-    if email is None or len(email.strip()) == 0:
+    if email is None or email == '':
         return jsonify({"error": "email missing"}), 400
-    if passwd is None or len(passwd.strip()) == 0:
+    if passwd is None or passwd == '':
         return jsonify({"error": "password missing"}), 400
     try:
         users = User.search({'email': email})
@@ -32,3 +32,15 @@ def session_login() -> Tuple[str, int]:
         res.set_cookie(getenv("SESSION_NAME"), sessiond_id)
         return res
     return jsonify({"error": "wrong password"}), 401
+
+@app_views.route(
+    '/auth_session/logout', methods=['DELETE'], strict_slashes=False)
+def session_logout() -> Tuple[str, int]:
+    """DELETE /api/v1/auth_session/logout
+    Return:
+      - An empty JSON object."""
+    from api.v1.app import auth
+    is_destroyed = auth.destroy_session(request)
+    if not is_destroyed:
+        abort(404)
+    return jsonify({})
