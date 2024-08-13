@@ -19,7 +19,7 @@ class DB:
     def __init__(self) -> None:
         """Initialize a new DB instance
         """
-        self._engine = create_engine("sqlite:///a.db", echo=False)
+        self._engine = create_engine("sqlite:///a.db", echo=True)
         Base.metadata.drop_all(self._engine)
         Base.metadata.create_all(self._engine)
         self.__session = None
@@ -39,24 +39,3 @@ class DB:
         self._session.add(new_user)
         self._session.commit()
         return new_user
-
-    def find_user_by(self, **kwargs) -> User:
-        """for finding User objects in the db"""
-        if not kwargs:
-            raise InvalidRequestError()
-
-        try:
-            query = self._session.query(User)
-            for key, value in kwargs.items():
-                if not hasattr(User, key):
-                    raise InvalidRequestError(f"Invalid field: {key}")
-                query = query.filter(getattr(User, key) == value)
-
-            user = query.one_or_none()
-            if user is None:
-                raise NoResultFound("No user found matching the criteria")
-
-        except Exception as e:
-            raise InvalidRequestError(f"An error occurred: {str(e)}")
-
-        return user
