@@ -64,3 +64,4 @@ class DB:
             raise InvalidRequestError(f"An error occurred: {str(e)}")
 
         return user
+    
