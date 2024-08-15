@@ -37,6 +37,16 @@ class Auth:
             # Return False if any exception occurs (e.g., user not found)
             return False
 
+    def create_session(self, email: str) -> str:
+        """creates and returns a session id"""
+        try:
+            user = self._db.find_user_by(email=email)
+            user.session_id = _generate_uuid()
+            self._db._session.commit()
+            return user.session_id
+        except Exception:
+            return None
+
 
 def _hash_password(password: str) -> bytes:
     """for hashing password using bcrypt"""
