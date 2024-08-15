@@ -57,6 +57,18 @@ class Auth:
             return None
         return user
 
+    def destory_session(self, user_id: int) -> None:
+        """destroys the session of given user"""
+        if user_id is None:
+            return None
+        try:
+            user = self._db.find_user_by(id=user_id)
+            user.session_id = None
+            self._db._session.commit()
+        except NoResultFound:
+            return
+        return None
+
 
 def _hash_password(password: str) -> bytes:
     """for hashing password using bcrypt"""
